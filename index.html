@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pustaka Busana Nusantara - Ensiklopedia Baju Tradisional Indonesia</title>
+    <meta name="description" content="Jelajahi keanekaragaman dan filosofi mendalam di balik pakaian adat tradisional dari 38 provinsi di Indonesia secara interaktif.">
+    <!-- Google Fonts: Playfair Display untuk judul premium, Inter untuk keterbacaan tinggi -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk ikon gratis -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <span class="logo-icon"><i class="fa-solid fa-vest-patches"></i></span>
+            <div class="logo-text">
+                <h1>Pustaka Busana</h1>
+                <span class="sub-logo">Nusantara</span>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <button id="nav-btn-explore" class="active" onclick="switchTab('explore')"><i class="fa-solid fa-compass"></i> Eksplorasi</button>
+            <button id="nav-btn-map" onclick="switchTab('map-view')"><i class="fa-solid fa-map-location-dot"></i> Peta Interaktif</button>
+            <button id="nav-btn-quiz" onclick="switchTab('quiz')"><i class="fa-solid fa-gamepad"></i> Kuis Adat</button>
+            <button id="nav-btn-fav" onclick="switchTab('favorites')"><i class="fa-solid fa-heart"></i> Favorit <span id="fav-count" class="badge">0</span></button>
+        </nav>
+        <div class="menu-toggle" onclick="toggleMobileMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- TAB EKSPLORASI (DEFAULT) -->
+        <section id="tab-explore" class="tab-content active">
+            <div class="hero">
+                <h2>Pesona Budaya dalam Rajutan Tradisi</h2>
+                <p>Temukan sejarah, filosofi, dan elemen estetika pakaian adat dari 38 provinsi di Nusantara.</p>
+                
+                <div class="search-filter-wrapper">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="search-input" placeholder="Cari baju adat atau nama provinsi..." oninput="handleSearch()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Wilayah / Island Group -->
+            <div class="region-filters">
+                <button class="filter-btn active" data-region="all" onclick="filterByRegion('all')">Semua Wilayah</button>
+                <button class="filter-btn" data-region="Sumatera" onclick="filterByRegion('Sumatera')">Sumatera</button>
+                <button class="filter-btn" data-region="Jawa" onclick="filterByRegion('Jawa')">Jawa</button>
+                <button class="filter-btn" data-region="Bali & Nusa Tenggara" onclick="filterByRegion('Bali & Nusa Tenggara')">Bali & Nusra</button>
+                <button class="filter-btn" data-region="Kalimantan" onclick="filterByRegion('Kalimantan')">Kalimantan</button>
+                <button class="filter-btn" data-region="Sulawesi" onclick="filterByRegion('Sulawesi')">Sulawesi</button>
+                <button class="filter-btn" data-region="Maluku" onclick="filterByRegion('Maluku')">Maluku</button>
+                <button class="filter-btn" data-region="Papua" onclick="filterByRegion('Papua')">Papua</button>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="catalog-header">
+                <span class="results-count" id="results-count">Menampilkan 38 pakaian adat</span>
+                <div class="sorting-controls">
+                    <label for="sort-select">Urutkan:</label>
+                    <select id="sort-select" onchange="handleSort()">
+                        <option value="province-asc">Provinsi (A-Z)</option>
+                        <option value="province-desc">Provinsi (Z-A)</option>
+                        <option value="name-asc">Nama Baju (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid Catalog -->
+            <div class="catalog-grid" id="catalog-grid">
+                <!-- Javascript akan me-render kartu disini secara dinamis -->
+            </div>
+        </section>
+
+        <!-- TAB PETA INTERAKTIF -->
+        <section id="tab-map-view" class="tab-content">
+            <div class="section-title">
+                <h2>Peta Interaktif Busana Nusantara</h2>
+                <p>Klik wilayah kepulauan pada peta untuk memfilter pakaian adat daerah tersebut secara instan.</p>
+            </div>
+            
+            <div class="map-container">
+                <!-- SVG Peta Indonesia Sederhana / Stylized Etnik -->
+                <svg id="indonesia-svg-map" viewBox="0 0 1000 450" width="100%" height="100%">
+                    <!-- Latar Belakang Lautan Siluet Lembut -->
+                    <rect width="1000" height="450" fill="var(--color-bg-map)" rx="16"></rect>
+                    
+                    <g class="map-group">
+                        <!-- SUMATERA -->
+                        <path class="map-region-path" data-region="Sumatera" d="M80,80 L230,220 L180,260 L40,120 Z" fill="var(--color-sumatera)" stroke="#fff" stroke-width="2" />
+                        <text x="110" y="160" class="map-label">Sumatera</text>
+
+                        <!-- JAWA -->
+                        <path class="map-region-path" data-region="Jawa" d="M190,290 L390,305 L380,325 L180,310 Z" fill="var(--color-jawa)" stroke="#fff" stroke-width="2" />
+                        <text x="280" y="340" class="map-label">Jawa</text>
+
+                        <!-- BALI & NUSA TENGGARA -->
+                        <path class="map-region-path" data-region="Bali & Nusa Tenggara" d="M400,310 L580,325 L580,340 L400,325 Z" fill="var(--color-balint)" stroke="#fff" stroke-width="2" />
+                        <text x="490" y="355" class="map-label">Bali & Nusra</text>
+
+                        <!-- KALIMANTAN -->
+                        <path class="map-region-path" data-region="Kalimantan" d="M290,120 L420,110 L450,210 L310,230 Z" fill="var(--color-kalimantan)" stroke="#fff" stroke-width="2" />
+                        <text x="360" y="170" class="map-label">Kalimantan</text>
+
+                        <!-- SULAWESI -->
+                        <path class="map-region-path" data-region="Sulawesi" d="M490,130 L590,115 L570,160 L515,170 L580,230 L550,240 L480,185 Z" fill="var(--color-sulawesi)" stroke="#fff" stroke-width="2" />
+                        <text x="540" y="160" class="map-label">Sulawesi</text>
+
+                        <!-- MALUKU -->
+                        <g class="map-region-path" data-region="Maluku" fill="var(--color-maluku)" stroke="#fff" stroke-width="1.5">
+                            <circle cx="630" cy="140" r="15" />
+                            <circle cx="670" cy="180" r="20" />
+                            <circle cx="640" cy="220" r="12" />
+                        </g>
+                        <text x="660" y="130" class="map-label">Maluku</text>
+
+                        <!-- PAPUA -->
+                        <path class="map-region-path" data-region="Papua" d="M720,180 L760,150 L800,165 L820,200 L930,200 L920,290 L750,280 Z" fill="var(--color-papua)" stroke="#fff" stroke-width="2" />
+                        <text x="820" y="240" class="map-label">Papua</text>
+                    </g>
+                </svg>
+            </div>
+            
+            <div class="map-results-heading">
+                <h3 id="map-selection-text">Klik salah satu wilayah kepulauan di atas untuk melihat hasilnya</h3>
+            </div>
+            
+            <div class="catalog-grid" id="map-catalog-grid">
+                <!-- Hasil filter peta akan muncul disini -->
+            </div>
+        </section>
+
+        <!-- TAB KUIS ADAT -->
+        <section id="tab-quiz" class="tab-content">
+            <div class="quiz-container">
+                <div class="quiz-start-screen" id="quiz-start-screen">
+                    <div class="quiz-header-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h2>Uji Pengetahuan Busana Nusantara</h2>
+                    <p>Uji sejauh mana Anda mengenal pakaian adat tradisional dari berbagai penjuru tanah air melalui kuis interaktif 10 pertanyaan ini.</p>
+                    <button class="primary-btn" onclick="startQuiz()">Mulai Kuis</button>
+                </div>
+
+                <div class="quiz-play-screen hidden" id="quiz-play-screen">
+                    <div class="quiz-progress-bar">
+                        <div class="progress-fill" id="quiz-progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <div class="quiz-meta">
+                        <span id="quiz-question-number">Pertanyaan 1 dari 10</span>
+                        <span id="quiz-score">Skor: 0</span>
+                    </div>
+                    
+                    <div class="quiz-card">
+                        <!-- SVG Representasi Pakaian untuk Kuis -->
+                        <div class="quiz-image-placeholder" id="quiz-img-container">
+                            <!-- SVG Baju Adat dinamis -->
+                        </div>
+                        <h3 class="quiz-question-text" id="quiz-question-text">Pakaian adat bernama Ulee Balang berasal dari provinsi mana?</h3>
+                    </div>
+
+                    <div class="quiz-options" id="quiz-options">
+                        <!-- Pilihan jawaban dinamis -->
+                    </div>
+                </div>
+
+                <div class="quiz-result-screen hidden" id="quiz-result-screen">
+                    <div class="quiz-result-icon" id="quiz-result-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <h2 id="quiz-result-title">Luar Biasa!</h2>
+                    <p id="quiz-result-desc">Anda menjawab 8 dari 10 pertanyaan dengan benar.</p>
+                    <div class="quiz-score-circle">
+                        <span id="quiz-final-score">80</span>
+                        <span class="max-score">/ 100</span>
+                    </div>
+                    <div class="quiz-action-buttons">
+                        <button class="primary-btn" onclick="startQuiz()">Main Lagi</button>
+                        <button class="secondary-btn" onclick="switchTab('explore')">Kembali ke Eksplorasi</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB FAVORIT -->
+        <section id="tab-favorites" class="tab-content">
+            <div class="section-title">
+                <h2>Koleksi Baju Adat Favorit Anda</h2>
+                <p>Simpan pakaian adat nusantara yang paling Anda sukai atau ingin dipelajari lebih lanjut.</p>
+            </div>
+            
+            <div class="catalog-grid" id="favorites-grid">
+                <!-- Daftar baju adat yang difavoritkan -->
+            </div>
+            
+            <div class="empty-state hidden" id="favorites-empty">
+                <i class="fa-regular fa-heart"></i>
+                <h3>Belum Ada Pakaian Adat Terfavorit</h3>
+                <p>Klik tombol hati <i class="fa-solid fa-heart"></i> pada detail pakaian adat di halaman eksplorasi untuk menyimpannya di sini.</p>
+                <button class="primary-btn" onclick="switchTab('explore')">Jelajahi Pakaian Adat</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- DETAIL MODAL OVERLAY -->
+    <div class="modal-overlay" id="detail-modal" onclick="closeModal(event)">
+        <div class="modal-card animate-fade-in" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="modal-body">
+                <div class="modal-left">
+                    <!-- Dynamic SVG Illustration Container -->
+                    <div class="modal-illustration-container" id="modal-img-container">
+                        <!-- Ditambahkan lewat JS -->
+                    </div>
+                    <div class="modal-palette" id="modal-palette">
+                        <!-- Palet warna baju adat -->
+                    </div>
+                </div>
+                
+                <div class="modal-right">
+                    <div class="modal-header-meta">
+                        <span class="province-badge" id="modal-province">Jawa Tengah</span>
+                        <span class="region-badge" id="modal-region">Jawa</span>
+                    </div>
+                    <h2 class="modal-title" id="modal-clothing-name">Jawi Jangkep</h2>
+                    
+                    <div class="modal-action-row">
+                        <button class="fav-action-btn" id="modal-fav-btn" onclick="toggleFavoriteCurrent()">
+                            <i class="fa-regular fa-heart"></i> Simpan ke Favorit
+                        </button>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3><i class="fa-solid fa-align-left"></i> Deskripsi</h3>
+                        <p id="modal-desc">Deskripsi pakaian adat...</p>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3><i class="fa-solid fa-dharmachakra"></i> Filosofi & Makna</h3>
+                        <p id="modal-philosophy">Filosofi dibalik baju adat...</p>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3><i class="fa-solid fa-tags"></i> Komponen Utama</h3>
+                        <ul class="components-list" id="modal-components">
+                            <!-- List komponen -->
+                        </ul>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3><i class="fa-solid fa-calendar-check"></i> Penggunaan Acara</h3>
+                        <p id="modal-occasions">Digunakan pada saat...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Pustaka Busana Nusantara. Dibuat dengan bangga untuk melestarikan kekayaan budaya Indonesia.</p>
+        <p class="footer-subtext">Ensiklopedia Interaktif 38 Provinsi Nusantara.</p>
+    </footer>
+
+    <!-- Muat Script JS -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
